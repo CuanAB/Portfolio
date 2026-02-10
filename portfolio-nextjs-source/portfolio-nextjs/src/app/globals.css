@@ -1,0 +1,133 @@
+/* ── globals.css ── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════
+   CSS DESIGN TOKENS
+   Dark mode = default (.dark class on <html>)
+═══════════════════════════════════════════ */
+:root {
+  --bg:           #090E1A;
+  --bg-card:      #0F1629;
+  --bg-card2:     #141B30;
+  --border:       rgba(255, 255, 255, 0.07);
+  --text:         #E8EDF8;
+  --text-muted:   #7A89AA;
+  --text-dim:     #4A5880;
+  --accent:       #4F8EF7;
+  --accent2:      #A78BFA;
+  --accent-glow:  rgba(79, 142, 247, 0.18);
+  --accent2-glow: rgba(167, 139, 250, 0.12);
+  --green:        #34D399;
+  --amber:        #FBBF24;
+  --shadow:       0 4px 32px rgba(0, 0, 0, 0.45);
+  --radius:       12px;
+  --radius-lg:    20px;
+}
+
+/* Light mode overrides */
+html.light, [data-theme="light"] {
+  --bg:           #F4F7FF;
+  --bg-card:      #FFFFFF;
+  --bg-card2:     #F0F4FF;
+  --border:       rgba(0, 0, 0, 0.08);
+  --text:         #0D1424;
+  --text-muted:   #5A6A8A;
+  --text-dim:     #9AA5C0;
+  --accent:       #2563EB;
+  --accent2:      #7C3AED;
+  --accent-glow:  rgba(37, 99, 235, 0.12);
+  --accent2-glow: rgba(124, 58, 237, 0.08);
+  --shadow:       0 4px 32px rgba(0, 0, 0, 0.10);
+}
+
+/* ── BASE STYLES ── */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  transition: background 0.25s, color 0.25s;
+  overflow-x: hidden;
+}
+
+/* Subtle grid background */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79, 142, 247, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 142, 247, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+/* ── TYPOGRAPHY HELPERS ── */
+.font-serif { font-family: var(--font-dm-serif), Georgia, serif; }
+
+/* ── SECTION PATTERNS ── */
+.section-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── LAYER UTILITIES ── */
+.z-content { position: relative; z-index: 1; }
+
+/* ── GLASSMORPHISM CARD ── */
+@layer components {
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card:hover {
+    border-color: rgba(79, 142, 247, 0.3);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+  }
+
+  .tag-blue   { background: rgba(79,142,247,0.12); color: #93C5FD; border: 1px solid rgba(79,142,247,0.2); }
+  .tag-violet { background: rgba(167,139,250,0.12); color: #C4B5FD; border: 1px solid rgba(167,139,250,0.2); }
+  .tag-green  { background: rgba(52,211,153,0.12); color: #6EE7B7; border: 1px solid rgba(52,211,153,0.2); }
+  .tag-amber  { background: rgba(251,191,36,0.12); color: #FCD34D; border: 1px solid rgba(251,191,36,0.2); }
+
+  .chip-up      { background: rgba(52,211,153,0.08); color: #34D399; border: 1px solid rgba(52,211,153,0.2); }
+  .chip-down    { background: rgba(251,113,133,0.08); color: #FB7185; border: 1px solid rgba(251,113,133,0.2); }
+  .chip-neutral { background: rgba(79,142,247,0.08); color: #4F8EF7; border: 1px solid rgba(79,142,247,0.2); }
+}
+
+/* Light mode tag overrides */
+html.light .tag-blue   { color: #1D4ED8; }
+html.light .tag-violet { color: #6D28D9; }
+html.light .tag-green  { color: #065F46; }
+html.light .tag-amber  { color: #92400E; }
+
+/* ── ANIMATIONS ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes glow-pulse {
+  0%   { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
+}
+
+.animate-blink        { animation: blink 2s ease-in-out infinite; }
+.animate-glow-pulse   { animation: glow-pulse 6s ease-in-out infinite alternate; }
